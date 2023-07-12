@@ -2,17 +2,18 @@ import React from 'react'
 import { Outlet } from 'react-router-dom'
 import Header from '../Components/Header/Header'
 import Footer from '../Components/Footer/Footer'
+import './layaout.css'
 
-function Dashboard() {
+function Layaout() {
   return (
     <div>
       <Header/>
-        <section>
-          <Outlet />
-        </section>
+      <section>
+        <Outlet />
+      </section>
       <Footer/>
     </div>
   )
 }
 
-export default Dashboard
+export default Layaout

@@ -14,17 +14,12 @@ import Typography from "@mui/material/Typography";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { useNavigate } from "react-router-dom";
 import { login } from "../../services/auth.service";
-
+import { IconButton } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 function Copyright(props) {
-    
   return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
+    <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {"Copyright © "}
       <Link color="inherit" href="http://localhost:5173/">
         IdeaHatch
@@ -35,81 +30,33 @@ function Copyright(props) {
   );
 }
 
-
-
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
-    const navigate = useNavigate();  
-    
-    const logIn = async (event) => {
-      event.preventDefault();
-      const email = event.target.email.value;
-      const password = event.target.password.value;
-      //console.log(password);
-      const data = await login(email, password);
+  const navigate = useNavigate();
+  const [isPassVisible, setIsPassVisible] = React.useState(false);
 
-      if (!localStorage.getItem("token")) {
-        alert("Error: Usuario o contraseña inválidos");
-      } else {
-        switch (localStorage.role) {
-          case "Admin":
-            navigate("/login/admin");
-            break;
-          case "User":
-            navigate("/login/user");
-            break;
-          default:
-            alert("Error: Rol de usuario desconocido");
-        }
-      }
+  const togglePasswordVisibility = () => {
+    setIsPassVisible(!isPassVisible);
+  };
+
+  const logIn = async (event) => {
+    event.preventDefault();
+    const email = event.target.email.value;
+    const password = event.target.password.value;
+    //console.log(password);
+    const data = await login(email, password);
+
+    if (!localStorage.getItem("token")) {
+      alert("Error: Usuario o contraseña inválidos");
+    } else {
+      navigate("/"); // Redireccionar a la página de inicio (home)
     }
-  //const handleSubmit = (event) => {
-  //  event.preventDefault();
-  //  const data = new FormData(event.currentTarget);
-  //  console.log({
-  //    email: data.get("email"),
-  //    password: data.get("password"),
-  //  });
-  //};
-
-
-/* export default function Login() {
-  const [isPassVisible, setIsPassVisible] = useState(false);
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("")
-  const navigate= useNavigate()  
-
-  function handleEmail(e) {
-    setEmail(e.target.value);
-  }
-
-  function handlePassword(e) {
-    setPassword(e.target.value)
-  }
-
-  const logIn = async () => {   
-    const data = await login(email, password)    
-    console.log(email)
-
-   if(!localStorage.getItem('token'))
-      alert('Error: Usuario o contraseña invalidos')
-   else {
-    switch (localStorage.role) {
-      case 'Admin':
-        navigate('/login/admin')
-        break
-      case 'Usuario':
-        navigate('/login/usuario')
-      break
-
-    }
-    }
-   */
+  };
 
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Grid container component="main" sx={{ height: "90vh" }}>
+      <Grid container component="main" sx={{ height: "80vh", display: "flex", justifyContent: "center"}}>
         <CssBaseline />
         <Grid
           item
@@ -117,13 +64,10 @@ export default function SignInSide() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage:
-              "url(https://source.unsplash.com/random?building)",
+            backgroundImage: "url(https://source.unsplash.com/random?project)",
             backgroundRepeat: "no-repeat",
             backgroundColor: (t) =>
-              t.palette.mode === "light"
-                ? t.palette.grey[50]
-                : t.palette.grey[900],
+              t.palette.mode === "light" ? t.palette.grey[50] : t.palette.grey[900],
             backgroundSize: "cover",
             backgroundPosition: "center",
           }}
@@ -136,6 +80,8 @@ export default function SignInSide() {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
+              height: "50vh",
+              justifyContent: "center",
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
@@ -144,12 +90,7 @@ export default function SignInSide() {
             <Typography component="h1" variant="h5">
               Acceso Usuarios
             </Typography>
-            <Box
-              component="form"
-              noValidate
-              onSubmit={logIn}
-              sx={{ mt: 1 }}
-            >
+            <Box component="form" noValidate onSubmit={logIn} sx={{ mt: 1 }}>
               <TextField
                 margin="normal"
                 required
@@ -159,16 +100,29 @@ export default function SignInSide() {
                 name="email"
                 autoComplete="email"
                 autoFocus
+                variant="outlined"
               />
+
               <TextField
+                sx={{bgcolor: 'rgb(232, 240, 254)'}}
                 margin="normal"
                 required
                 fullWidth
                 name="password"
                 label="Password"
-                type="password"
+                type={isPassVisible ? "text" : "password"}
                 id="password"
+                variant="outlined"
                 autoComplete="current-password"
+                
+                InputProps={{
+                sx: {padding: '0px'},
+                endAdornment: (
+                  <IconButton sx={{padding:'10px'}} onClick={(e) => togglePasswordVisibility()}>
+                    {isPassVisible ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                ),
+              }}
               />
               <FormControlLabel
                 control={<Checkbox value="remember" color="primary" />}
@@ -179,9 +133,11 @@ export default function SignInSide() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
+                
               >
-                Sign In
+                Log In
               </Button>
+            
               <Copyright sx={{ mt: 5 }} />
             </Box>
           </Box>
