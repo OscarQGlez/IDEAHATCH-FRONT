@@ -1,7 +1,4 @@
-import React from 'react'
-import './Header.css'
-
-
+import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -16,22 +13,10 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 
-import { Link} from 'react-router-dom';
+const pages = ['Products', 'Pricing', 'Blog'];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-
-
-const pages = [
-  { label: 'Buscar', link: '/search' },
-  { label: 'Publicar', link: '/new' },
-  
-
-];
-const settings = [
-  { label:'Profile', link: '/profilepage'}, 
-  { label:'Logout', link: '/'},
-];
-
-function Header() {
+function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -51,32 +36,40 @@ function Header() {
   };
 
   return (
-    <AppBar position="static" sx={{backgroundColor: "#6e00ee"}}>
-      <Container maxWidth="fixed">
-        <Toolbar >
-          
+    <AppBar position="static">
+      <Container maxWidth="xl">
+        <Toolbar disableGutters>
+          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
           <Typography
-            variant="h4"
+            variant="h6"
             noWrap
-            component={Link}
-            to="/"
+            component="a"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
-              fontFamily:'cursive',
+              fontFamily: 'monospace',
               fontWeight: 700,
-              letterSpacing: '.15rem',
+              letterSpacing: '.3rem',
               color: 'inherit',
               textDecoration: 'none',
             }}
           >
-            Idea Hatch
+            LOGO
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-            
-
-            <Menu 
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-appbar"
+              aria-haspopup="true"
+              onClick={handleOpenNavMenu}
+              color="inherit"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Menu
               id="menu-appbar"
               anchorEl={anchorElNav}
               anchorOrigin={{
@@ -84,55 +77,60 @@ function Header() {
                 horizontal: 'left',
               }}
               keepMounted
-
               transformOrigin={{
                 vertical: 'top',
                 horizontal: 'left',
               }}
-
               open={Boolean(anchorElNav)}
               onClose={handleCloseNavMenu}
               sx={{
-                display: { xs: 'block', md: 'none'  }
+                display: { xs: 'block', md: 'none' },
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page.label} onClick={handleCloseNavMenu}>
-                  <Typography textAlign="center">{page.label}</Typography>
+                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                  <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
             </Menu>
-
           </Box>
-          
-
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'center', alignItems: 'center' }}>
-            {pages.map((page, index) => (
-              <Link
-                key={page.label}
-                to={page.link}
+          <AdbIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href=""
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'none' },
+              flexGrow: 1,
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            LOGO
+          </Typography>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+            {pages.map((page) => (
+              <Button
+                key={page}
                 onClick={handleCloseNavMenu}
-                style={{
-                  marginLeft: index !== 0 ? '100px' : '0',
-                  color: 'white',
-                  textDecoration: 'none',
-                  fontSize: '20px',
-                  margin: '10px',
-                }}
+                sx={{ my: 2, color: 'white', display: 'block' }}
               >
-                {page.label}
-              </Link>
+                {page}
+              </Button>
             ))}
           </Box>
 
-
-          <Box sx={{ flexGrow: 0}}>
+          <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Avatar" src="" />
+                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
               </IconButton>
             </Tooltip>
-
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
@@ -150,17 +148,8 @@ function Header() {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting.label} onClick={handleCloseUserMenu}>
-                  
-                  <Typography 
-                    textAlign="center"
-                    sx={{textDecoration: 'none'}}
-                    
-                    component={Link}
-                    to={setting.link}
-                    >
-                      {setting.label}
-                  </Typography>
+                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                  <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -170,4 +159,4 @@ function Header() {
     </AppBar>
   );
 }
-export default Header;
+export default ResponsiveAppBar;

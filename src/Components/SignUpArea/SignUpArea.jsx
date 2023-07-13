@@ -1,8 +1,9 @@
-import * as React from 'react';
+//import * as React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
+
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 
@@ -13,15 +14,19 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
+import './SignUpArea.css'
 import { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { IconButton } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { signup } from '../../services/auth.service';
+import { getAllUsers } from '../../services/user.service'
 
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 const passRegex = /^(?=.*\d)(.{5,})\1$/
+
+
 
 function Copyright(props) {
   return (
@@ -36,7 +41,10 @@ function Copyright(props) {
   );
 }
 
+
+
 const defaultTheme = createTheme();
+
 
 export default function SignUp() {
   const [isPassvisible, setIsPassVisible] = useState(false)
@@ -67,12 +75,18 @@ export default function SignUp() {
   const navigate = useNavigate()
 
   const validateName = (e) => {
-    const name = e.target.value
+    const n = e.target.value.toLowerCase()
+    const name = n.charAt(0).toUpperCase() + n.slice(1)
     setName(name)
   }
 
   const validateLastName = (e) => {
-    const lastName = e.target.value
+    const lN = e.target.value.toLowerCase()
+    const lastName = lN
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ')
+
     setLastName(lastName)
   }
 
@@ -104,7 +118,7 @@ export default function SignUp() {
   }
 
   const validateEmail = (e) => {
-    const email = e.target.value
+    const email = e.target.value.toLowerCase()
     setEmail(email)
     if (!emailRegex.test(email)) {
       setValid(false)
@@ -155,25 +169,13 @@ const formValidate = (e) => {
     } else if (validPassword !== true) {
       alert('verify your password')
     } else {
-      await signup(name, email, password)
+      await signup(name, email, password, lastName, mobilePhone,  dateBirth, country)
       if (!localStorage.getItem('token')) alert('Error')
       else navigate('/')
     }
   }
 
-
-
-
-
-
- /*  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
-  }; */
+  
 
   return (
     <ThemeProvider theme={defaultTheme}>
@@ -283,10 +285,14 @@ const formValidate = (e) => {
                 <TextField
                   required
                   fullWidth
-                  id="date_of_Birth"
-                  label="Date of Birth"
+                  id="date"
+                  label="Birthday"
+                  type="date"
                   name="date_of_Birth"
-                  autoComplete="new-date_of_Birth"
+                  InputLabelProps={{
+                    shrink: true,
+                    style: { whiteSpace: 'pre-wrap' }
+                  }}
                   onChange={validateDateBirth}
                 />
               </Grid>
@@ -319,7 +325,7 @@ const formValidate = (e) => {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick = {signup}
+              onClick = {signUp}
             >
               Crear cuenta
             </Button>

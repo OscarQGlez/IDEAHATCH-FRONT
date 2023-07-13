@@ -1,8 +1,8 @@
 import { api } from './api'
 
-export const getUsers = async () => {
+export const getAllUsers = async () => {
   try {
-    const { data } = await api.get('/users', {
+    const { data } = await api.get('/user', {
         headers: {
         token: localStorage.getItem('token'),
       },
