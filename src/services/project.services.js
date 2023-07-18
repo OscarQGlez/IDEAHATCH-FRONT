@@ -2,7 +2,7 @@ import { api } from "./api";
 
 export const createProject = async (body) => {
     try {
-        const {data} = await api.post('/project/newproject',body, {headers: {token: localStorage.getItem( 'token' ) } } )
+        const {data} = await api.post('/project/newproject',body, {headers: {token: localStorage.getItem( 'token' )} } )
         return data
     } catch (error) {
         console.error('Error al crear un Proyecto ', error)

@@ -6,7 +6,10 @@ import TextField from '@mui/material/TextField';
 import Checkbox from '@mui/material/Checkbox'; */
 import { InputAdornment } from '@mui/material';
 
-export default function PaymentForm() {
+
+
+export default function GoalAmount({handleChange}) {
+  
   return (
     <form>
       <Typography variant="h5" gutterBottom>
@@ -24,16 +27,19 @@ export default function PaymentForm() {
         <Grid item xs={12}>
           <TextField
             required
-            id="goal amount"
+            id="goal_amount"
+            name='goal_amount'
             label="Goal amount"
             fullWidth
-            autoComplete="goal amount"
+            autoComplete="goal_amount"
             variant="standard"
+            /* value = {handleAmount} */
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">€</InputAdornment>
-              ),
+              )              
             }}
+            onChange= {handleChange}
           />
         </Grid>
         

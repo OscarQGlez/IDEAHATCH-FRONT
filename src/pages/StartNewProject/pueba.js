@@ -1,50 +1,20 @@
-import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Toolbar from '@mui/material/Toolbar';
-import Paper from '@mui/material/Paper';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
-//import Link from '@mui/material/Link';
-import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
-//mport AddressForm from './AddressForm';
-import GoalAmount from './GoalAmount';
-//import Review from './Review';
-import DataBasicForm from './DataBasicForm';
 import { createProject } from '../../services/project.services';
-import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
-
-
-
 
 const steps = ['Datos del proyecto', 'Objetivo de financiación'];
 
-
-
-// TODO remove, this demo shouldn't need to reset the theme.
-const defaultTheme = createTheme();
-
 export default function Checkout() {
-  const [activeStep, setActiveStep] = useState(0);
-  const [projectData, setProjectData] = useState({
+  const [activeStep, setActiveStep] = React.useState(0);
+  const [projectData, setProjectData] = React.useState({
+    creator_id: '',
     title: '',
     subtitle: '',
     Project_Description: '',
     Deadline: '',
-    Status: 'Activo',
-    Project_Creation_Date: new Date().toISOString(),
-    Project_Update_Date: new Date().toISOString(),
+    Status: '', // Declararlo inicialmente vacío
+    Project_Creation_Date: new Date().toISOString(), // Declararlo con la fecha actual
+    Project_Update_Date: new Date().toISOString(), // Declararlo con la fecha actual
     Project_Type: '',
-    categories:'',
-    goal_amount:0,
   });
-
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -57,35 +27,36 @@ export default function Checkout() {
   const handleSave = async () => {
     try {
       const res = await createProject(projectData);
-      console.log("Proyecto guardado exitosamente");
-      
-      
+      console.log('Proyecto guardado exitosamente');
+      // Aquí puedes agregar lógica adicional después de guardar en la base de datos
     } catch (error) {
-         console.log("Error al enviar la solicitud de crear un Proyecto:", error);
-      
+      console.log('Error al enviar la solicitud de crear un Proyecto:', error);
     }
-  }
-  const handleChange = (e) => {
-    const {name,value} = e.target;
-    console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<hola')
-    console.log(e)
-    setProjectData ((prevData) => ({ ...prevData, [name]: value}))
-  }
+  };
 
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setProjectData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
 
   function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <DataBasicForm handleChange={handleChange}/>;
-    case 1:
-      return <GoalAmount handleChange={handleChange}/>;
-    default:
-      throw new Error('Unknown step');
+    switch (step) {
+      case 0:
+        return <DataBasicForm handleChange={handleChange} />;
+      case 1:
+        return <GoalAmount handleChange={handleChange} />;
+      default:
+        throw new Error('Unknown step');
+    }
   }
-}
+
+  // TODO remove, this demo shouldn't need to reset the theme.
+  const defaultTheme = createTheme();
 
   return (
-
     <ThemeProvider theme={defaultTheme}>
       <CssBaseline />
       <AppBar
@@ -122,7 +93,6 @@ export default function Checkout() {
               <Typography variant="h5" gutterBottom>
                 Tu proyecto se ha creado.
               </Typography>
-        
             </form>
           ) : (
             <form>
@@ -133,7 +103,7 @@ export default function Checkout() {
                     Back
                   </Button>
                 )}
-                
+
                 <Button
                   variant="contained"
                   onClick={activeStep === steps.length - 1 ? handleSave : handleNext}
@@ -145,8 +115,5 @@ export default function Checkout() {
             </form>
           )}
         </Paper>
-        
       </Container>
     </ThemeProvider>
-  );
-}
