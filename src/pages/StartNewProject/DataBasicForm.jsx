@@ -20,7 +20,7 @@ export default function DataBasicForm({handleChange}) {
             setSelectCategories(categories)
             
             } catch (error) {
-            console.error('Error al obtener las Categories:', error);
+              console.error('Error al obtener las Categories:', error);
             }
         }
 

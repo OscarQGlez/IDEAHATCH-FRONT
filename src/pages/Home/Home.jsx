@@ -1,9 +1,10 @@
 //import React, { useState } from 'react'
 // import '../../Components/Header/Header'
 //import Header from '../../Components/Header/Header'
-import { AppBar, Box,  Divider, InputAdornment, Link, TextField, Toolbar } from '@mui/material'
+import { AppBar, Box,  Container,  Divider, Grid, InputAdornment, Link, TextField, Toolbar } from '@mui/material'
 import { GridSearchIcon } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
+import { getAllProjectEager } from '../../services/project.services';
 /* import ProjectCard from '../../Components/ProjectCard/ProjectCard'
 import { getAllProjectEager } from '../../services/project.services'; */
 
@@ -21,9 +22,27 @@ function Home() {
     { title: 'Travel', url: '#' },
   ];  
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [projects, setProjects] = useState([]);
+
+
+  useEffect(() => {
+    async function handleProjects () {
+      try {
+        const allProjects = await getAllProjectEager()
+        console.log(allProjects)
+        setProjects(allProjects)
+      } catch (error) {
+        console.error('Error al obtener las todos los proyectos:', error);
+      }
+    }
+    handleProjects ()
+  }, [])
+
+
+
   /* const [projectAll, setProjectAll] = useState([]);
-  const [projectCards, setRandomProjectCards] = useState([]);
+  const [projectCard, setRandomProjectCards] = useState([]);
 
 
   useEffect(() => {
@@ -62,9 +81,8 @@ function Home() {
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
-  };
-
-  
+  }
+  console.log(searchTerm)
   return (
     <Box>
       <AppBar 
@@ -98,7 +116,7 @@ function Home() {
         
         </AppBar>
 
-        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', margin: 'auto', padding:"20%"}}>
+        <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding:"5%"}}>
           <TextField
             id="search"
             type="search"
@@ -114,7 +132,38 @@ function Home() {
               ),
             }}
           />
-        </Box>
+
+
+
+
+
+
+          <Grid
+          container
+          position="relative"
+          spacing={4}
+          justify="center"
+          >  
+            {(searchTerm.length!=0) ?
+                  projects.filter((project)=>{             
+                        console.log(project.title, searchTerm, project.title.includes(searchTerm))
+                        return (project.title.includes(searchTerm))
+                      }).map((card, index) => (
+                  <Grid item xs={12} sm={3} md={3} key={index}>
+                    <TripCard propCard={card}/>
+                  </Grid>      
+                  )) : 
+                  randomTripCards           
+                    .map((card, index) => (
+                  <Grid item xs={12} sm={3} md={3} key={index}>
+                    <TripCard propCard={card}/>
+                  </Grid>      
+                  )) }
+          </Grid>
+
+
+
+        </Container>
       </Box>
 
   )
