@@ -5,6 +5,7 @@ import { AppBar, Box,  Container,  Divider, Grid, InputAdornment, Link, TextFiel
 import { GridSearchIcon } from '@mui/x-data-grid';
 import { useEffect, useState } from 'react';
 import { getAllProjectEager } from '../../services/project.services';
+import ProjectCard from '../../Components/ProjectCard/ProjectCard';
 /* import ProjectCard from '../../Components/ProjectCard/ProjectCard'
 import { getAllProjectEager } from '../../services/project.services'; */
 
@@ -24,6 +25,7 @@ function Home() {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [projects, setProjects] = useState([]);
+  const [randomProjectCards, setRandomProjectCards] = useState([]);
 
 
   useEffect(() => {
@@ -32,6 +34,13 @@ function Home() {
         const allProjects = await getAllProjectEager()
         console.log(allProjects)
         setProjects(allProjects)
+
+        const randomIndexArray = getRandomIndexArray(allProjects.length, 4)
+        
+        const randomProjects= randomIndexArray.map(
+          (index) => allProjects[index]
+        );
+        setRandomProjectCards(randomProjects);
       } catch (error) {
         console.error('Error al obtener las todos los proyectos:', error);
       }
@@ -40,27 +49,7 @@ function Home() {
   }, [])
 
 
-
-  /* const [projectAll, setProjectAll] = useState([]);
-  const [projectCard, setRandomProjectCards] = useState([]);
-
-
-  useEffect(() => {
-    async function fetchProjectcards() {
-      try {
-        const projectCard = await getAllProjectEager
-        setProjectAll(projectCard)
-        const randomprojects = getRandomIndexArray(projectCard.length, 4).map ((index) => projectCard[index])
-        setRandomProjectCards(randomTrips);
-      } catch (error) {
-        console.error("Error al obtener las tarjetas:", error);
-      }
-
-    }
-    fetchProjectcards()
-  }, []);
-
-   function getRandomIndexArray(length, count) {
+  function getRandomIndexArray(length, count) {
     const indexArray = [...Array(length).keys()]; // Crear un array con todos los índices
     const shuffledIndexArray = shuffleArray(indexArray); // Mezclar los índices aleatoriamente
     return shuffledIndexArray.slice(0, count); // Obtener los primeros 'count' índices del array mezclado
@@ -76,8 +65,8 @@ function Home() {
       ];
     }
     return shuffledArray; 
-  }*/
-  
+  }
+
 
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
@@ -116,14 +105,15 @@ function Home() {
         
         </AppBar>
 
-        <Container sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding:"5%"}}>
-          <TextField
+        <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', margin:"auto", marginTop:'70px'}}>
+{/*           display: 'flex', flexDirection: 'column', alignItems: 'center'
+ */}          <TextField
             id="search"
             type="search"
             label="Search"
             value={searchTerm}
             onChange={handleChange}
-            sx={{ width: 900,   }}
+            sx={{ width: 900,  position: 'relative' }}
             InputProps={{
               endAdornment: (
                 <InputAdornment position="end">
@@ -150,13 +140,13 @@ function Home() {
                         return (project.title.includes(searchTerm))
                       }).map((card, index) => (
                   <Grid item xs={12} sm={3} md={3} key={index}>
-                    <TripCard propCard={card}/>
+                    <ProjectCard propCard={card}/>
                   </Grid>      
                   )) : 
-                  randomTripCards           
+                  randomProjectCards           
                     .map((card, index) => (
                   <Grid item xs={12} sm={3} md={3} key={index}>
-                    <TripCard propCard={card}/>
+                    <ProjectCard propCard={card}/>
                   </Grid>      
                   )) }
           </Grid>

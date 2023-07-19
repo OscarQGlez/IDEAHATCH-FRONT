@@ -1,18 +1,12 @@
 //import * as React from 'react';
-import AspectRatio from '@mui/joy/AspectRatio';
-import Button from '@mui/joy/Button';
-import Card from '@mui/joy/Card';
-import CardContent from '@mui/joy/CardContent';
-import CardOverflow from '@mui/joy/CardOverflow';
+import AspectRatio from '@mui/joy/react';
+import { Button, Card, CardContent, CardMedia, Typography, Grid } from '@mui/material';
 
-import Typography from '@mui/joy/Typography';
-
-import { Grid } from '@mui/material';
 
 export default function projectDetails() {
   return (
     <Card sx={{ width: 520, maxWidth: '100%', boxShadow: 'lg',borderRadius:"0px" }}>
-      <CardOverflow >
+      <CardMedia >
         <AspectRatio sx={{ minWidth: 200, borderRadius:"0" }}>
           <img
             src="https://source.unsplash.com/random?project"
@@ -22,7 +16,7 @@ export default function projectDetails() {
           />
         </AspectRatio>
       
-      </CardOverflow>
+      </CardMedia>
       
       <CardContent>
         <Grid container spacing={3}> 
