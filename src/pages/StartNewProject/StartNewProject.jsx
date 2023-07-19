@@ -18,7 +18,7 @@ import GoalAmount from './GoalAmount';
 import DataBasicForm from './DataBasicForm';
 import { createProject } from '../../services/project.services';
 import { useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -44,6 +44,7 @@ export default function Checkout() {
     categories:'',
     goal_amount:0,
   });
+  const navigate = useNavigate();
 
 
   const handleNext = () => {
@@ -58,7 +59,8 @@ export default function Checkout() {
     try {
       const res = await createProject(projectData);
       console.log("Proyecto guardado exitosamente");
-      
+      //return redirect ("www.google.com")
+      navigate("/")
       
     } catch (error) {
          console.log("Error al enviar la solicitud de crear un Proyecto:", error);
@@ -67,7 +69,7 @@ export default function Checkout() {
   }
   const handleChange = (e) => {
     const {name,value} = e.target;
-    console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<hola')
+    //console.log('<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<hola')
     console.log(e)
     setProjectData ((prevData) => ({ ...prevData, [name]: value}))
   }
