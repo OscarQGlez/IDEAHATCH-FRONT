@@ -1,13 +1,15 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
-import Header from '../Components/Header/HeaderPpal'
+import HeaderPpal from '../Components/Header/HeaderPpal'
+import Header from '../Components/Header/Header'
 import Footer from '../Components/Footer/Footer'
 import './layaout.css'
 
 function Layaout() {
+  const token = localStorage.getItem('token');
   return (
     <div id='layout'>
-      <Header/>
+      {token ? <Header /> : <HeaderPpal />}
       <section>
         <Outlet />
       </section>
