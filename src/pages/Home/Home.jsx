@@ -11,16 +11,16 @@ import { getAllProjectEager } from '../../services/project.services'; */
 
 function Home() {
   const categoriesn = [
-    { title: 'Technology', url: '#' },
-    { title: 'Design', url: '#' },
-    { title: 'Culture', url: '#' },
-    { title: 'Business', url: '#' },
-    { title: 'Politics', url: '#' },
-    { title: 'Opinion', url: '#' },
-    { title: 'Science', url: '#' },
-    { title: 'Health', url: '#' },
-    { title: 'Style', url: '#' },
-    { title: 'Travel', url: '#' },
+    { title: 'Arte', url: '#' },
+    { title: 'Comics', url: '#' },
+    { title: 'Artesania', url: '#' },
+    { title: 'Tecnología', url: '#' },
+    { title: 'cine y video', url: '#' },
+    { title: 'Juegos', url: '#' },
+    { title: 'Música', url: '#' },
+    { title: 'Moda', url: '#' },
+    { title: 'Danza', url: '#' },
+    { title: 'Eventos', url: '#' },
   ];  
 
   const [searchTerm, setSearchTerm] = useState('');
