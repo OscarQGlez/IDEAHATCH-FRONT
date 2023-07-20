@@ -32,7 +32,6 @@ function Home() {
     async function handleProjects () {
       try {
         const allProjects = await getAllProjectEager()
-        console.log(allProjects)
         setProjects(allProjects)
 
         const randomIndexArray = getRandomIndexArray(allProjects.length, 4)
@@ -71,7 +70,32 @@ function Home() {
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
   }
-  console.log(searchTerm)
+
+  function showProjects() {
+    console.log(projects)
+    if (searchTerm.length > 0) {
+      return projects.filter((project)=>{    
+        console.log(project.title.includes(searchTerm))         
+          return (project.title.includes(searchTerm))
+        }).map((card, index) => (
+       <Grid item xs={12} sm={3} md={3} key={index}>
+          <ProjectCard propCard={card}/>
+        </Grid>   
+    ))
+    } else {
+      return (
+        randomProjectCards           
+          .map((card, index) => (
+        <Grid item xs={12} sm={3} md={3} key={index}>
+          <ProjectCard propCard={card}/>
+        </Grid>   
+            
+        )))
+    }
+                  
+                  
+  }
+
   return (
     <Box>
       <AppBar 
@@ -123,32 +147,13 @@ function Home() {
             }}
           />
 
-
-
-
-
-
           <Grid
           container
           position="relative"
           spacing={4}
           justify="center"
           >  
-            {(searchTerm.length!=0) ?
-                  projects.filter((project)=>{             
-                        console.log(project.title, searchTerm, project.title.includes(searchTerm))
-                        return (project.title.includes(searchTerm))
-                      }).map((card, index) => (
-                  <Grid item xs={12} sm={3} md={3} key={index}>
-                    <ProjectCard propCard={card}/>
-                  </Grid>      
-                  )) : 
-                  randomProjectCards           
-                    .map((card, index) => (
-                  <Grid item xs={12} sm={3} md={3} key={index}>
-                    <ProjectCard propCard={card}/>
-                  </Grid>      
-                  )) }
+            { showProjects() }
           </Grid>
 
 
