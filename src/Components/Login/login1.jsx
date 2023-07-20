@@ -17,19 +17,19 @@ import { login } from "../../services/auth.service";
 import { IconButton } from "@mui/material";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 
-function Copyright(props) {
+/*function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {"Copyright © "}
       <Link color="inherit" href="http://localhost:5173/">
         IdeaHatch
-      </Link>{" "}
+      </Link>
       {new Date().getFullYear()}
       {"."}
     </Typography>
   );
 }
-
+*/
 const defaultTheme = createTheme();
 
 export default function SignInSide() {
@@ -138,7 +138,7 @@ export default function SignInSide() {
                 Log In
               </Button>
             
-              <Copyright sx={{ mt: 5 }} />
+              {/* <Copyright sx={{ mt: 5 }} /> */}
             </Box>
           </Box>
         </Grid>

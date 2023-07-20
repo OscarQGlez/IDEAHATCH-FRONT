@@ -22,6 +22,8 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { signup } from '../../services/auth.service';
 import { getAllUsers } from '../../services/user.service'
 
+import { Navigate } from "react-router-dom";
+
 
 const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
 const passRegex = /^(?=.*\d)(.{5,})\1$/
@@ -320,15 +322,17 @@ const formValidate = (e) => {
                 />
               </Grid>
             </Grid>
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              onClick = {signUp}
-            >
-              Crear cuenta
-            </Button>
+            <Link to="/login">
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+                onClick = {signUp}
+              >
+                Crear cuenta
+              </Button>
+            </Link>
 
 
             <Grid container justifyContent="flex-end">

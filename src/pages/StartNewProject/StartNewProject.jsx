@@ -18,7 +18,7 @@ import GoalAmount from './GoalAmount';
 import DataBasicForm from './DataBasicForm';
 import { createProject } from '../../services/project.services';
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 
@@ -61,6 +61,7 @@ export default function Checkout() {
       console.log("Proyecto guardado exitosamente");
       //return redirect ("www.google.com")
       navigate("/")
+      Link 
       
     } catch (error) {
          console.log("Error al enviar la solicitud de crear un Proyecto:", error);

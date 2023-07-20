@@ -21,8 +21,8 @@ import { Link} from 'react-router-dom';
 
 
 const pages = [
-  { label: 'Buscar', link: '/search' },
-  { label: 'Publicar', link: '/new' },
+  { label: 'Buscar', link: '/' },
+  { label: 'Publicar', link: '/startproject' },
   
 
 ];

@@ -25,7 +25,7 @@ const pages = [
   { label: 'sign Up', link: '/signup' },
 ];
 
-function Header() {
+function HeaderPpal() {
   
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
@@ -75,4 +75,4 @@ function Header() {
     </AppBar>
   );
 }
-export default Header;
+export default HeaderPpal;
