@@ -1,9 +1,15 @@
 //import * as React from 'react';
 import AspectRatio from '@mui/joy/react';
 import { Button, Card, CardContent, CardMedia, Typography, Grid } from '@mui/material';
+import { useLocation } from 'react-router-dom';
 
 
 export default function projectDetails() {
+
+  // Utiliza el hook useLocation para obtener la ubicación actual y el estado pasado.
+  const location = useLocation();
+  const card = location.state.card; // Extrae el objeto 'card' del estado
+
   return (
     <Card sx={{ width: 520, maxWidth: '100%', boxShadow: 'lg',borderRadius:"0px" }}>
       <CardMedia >
@@ -26,7 +32,7 @@ export default function projectDetails() {
                 fontWeight="xl"
                 sx={{ mt:  1}}
                 >
-                    Title:
+                    Title: {card.title}
                 </Typography>
             </Grid>
 
@@ -36,7 +42,7 @@ export default function projectDetails() {
                 
                 sx={{ mt:  1}}
                 >
-                Subtitle:
+                Subtitle: {card.subtitle}
                 </Typography>
             </Grid>
 
@@ -45,7 +51,7 @@ export default function projectDetails() {
                 fontSize="xl"
                 sx={{ mt: 1}}
                 >
-                Categoria:
+                Categoria: {card.category_name}
                 </Typography>
             </Grid>
 
@@ -54,7 +60,7 @@ export default function projectDetails() {
                 fontSize="xl"
                 sx={{ mt:  1}}
                 >
-                Fecha Limite:
+                Fecha Limite: {card.Deadline}
                 </Typography>
             </Grid>
 
@@ -63,7 +69,7 @@ export default function projectDetails() {
                 fontSize="xl"
                 sx={{ mt:  1}}
                 >
-                Descipcion:
+                Descipcion: {card.Project_Description}
                 </Typography>
             </Grid>
 
@@ -72,7 +78,7 @@ export default function projectDetails() {
                 fontSize="xl"
                 sx={{ mt: 1 }}
                 >
-                Estado:
+                Estado: {card.Status}
                 </Typography>
             </Grid>
 
@@ -81,17 +87,17 @@ export default function projectDetails() {
                 fontSize="xl"
                 sx={{ mt:  2}}
                 >
-                Goal Amount:
+                Goal Amount: {card.goal_amount}
                 </Typography>
             </Grid>            
 
         </Grid>
       </CardContent>
-      <CardOverflow >
+      <CardContent >
         <Button variant="solid" color="primary" size="lg" sx={{borderRadius:"0"}}>
           Contribuir
         </Button>
-      </CardOverflow>
+      </CardContent>
     </Card>
   );
 }

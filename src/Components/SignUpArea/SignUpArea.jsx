@@ -189,6 +189,7 @@ const formValidate = (e) => {
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
+            marginBottom:8,
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -197,7 +198,7 @@ const formValidate = (e) => {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={formValidate} sx={{ mt: 3 }}>
+          <Box component="form" noValidate onSubmit={formValidate} sx={{ mt: 3  }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 
@@ -335,16 +336,16 @@ const formValidate = (e) => {
             </Link>
 
 
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link to="/login" variant="body2">
+            <Grid container justifyContent="flex-end" >
+              <Grid item >
+                <Link to="/login" variant="body2" >
                   Already have an account? Log in
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+       {/*  <Copyright sx={{ mt: 5 }} /> */}
       </Container>
     </ThemeProvider>
   );

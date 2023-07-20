@@ -26,6 +26,7 @@ function Home() {
   const [searchTerm, setSearchTerm] = useState('');
   const [projects, setProjects] = useState([]);
   const [randomProjectCards, setRandomProjectCards] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
 
   useEffect(() => {
@@ -71,6 +72,11 @@ function Home() {
   const handleChange = (event) => {
     setSearchTerm(event.target.value);
   }
+
+  const handleCategoryClick = (categoryTitle) => {
+    setSelectedCategory(categoryTitle);
+  };
+
   console.log(searchTerm)
   return (
     <Box>
@@ -88,11 +94,13 @@ function Home() {
         >
           {categoriesn.map((categoryn) => (
             <Link
-              color="inherit"
+              /* color="inherit" */
+              color={selectedCategory === categoryn.title ? 'primary' : 'inherit'}
               noWrap
               key={categoryn.title}
               variant="body2"
-              href='/'
+              /* href='/' */
+              onClick={() => handleCategoryClick(categoryn.title)}
               sx={{ p: 1, flexShrink: 0, textDecoration: 'none' }}
               
             >
@@ -106,8 +114,8 @@ function Home() {
         </AppBar>
 
         <Container sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', margin:"auto", marginTop:'70px'}}>
-{/*           display: 'flex', flexDirection: 'column', alignItems: 'center'
- */}          <TextField
+          {/* display: 'flex', flexDirection: 'column', alignItems: 'center' */}
+          <TextField
             id="search"
             type="search"
             label="Search"
@@ -123,32 +131,37 @@ function Home() {
             }}
           />
 
-
-
-
-
-
           <Grid
           container
           position="relative"
           spacing={4}
           justify="center"
           >  
-            {(searchTerm.length!=0) ?
-                  projects.filter((project)=>{             
-                        console.log(project.title, searchTerm, project.title.includes(searchTerm))
-                        return (project.title.includes(searchTerm))
-                      }).map((card, index) => (
-                  <Grid item xs={12} sm={3} md={3} key={index}>
-                    <ProjectCard propCard={card}/>
-                  </Grid>      
-                  )) : 
-                  randomProjectCards           
-                    .map((card, index) => (
-                  <Grid item xs={12} sm={3} md={3} key={index}>
-                    <ProjectCard propCard={card}/>
-                  </Grid>      
-                  )) }
+            {(searchTerm.length!=0) 
+              ? projects
+                  .filter((project)=>{             
+                    console.log(project.title, searchTerm)
+                    return (project.title.includes(searchTerm))})
+                  .map((card, index) => (
+                    <Grid item xs={12} sm={3} md={3} key={index}>
+                       <ProjectCard propCard={card}/>
+                    </Grid>      
+                  ))
+              : selectedCategory
+              ? projects
+                  .filter((project) => project.category === selectedCategory)
+                  .map((card, index) => (
+                    <Grid item xs={12} sm={3} md={3} key={index}>
+                      <ProjectCard propCard={card} />
+                    </Grid>
+                  )) 
+              : randomProjectCards           
+                  .map((card, index) => (
+                    <Grid item xs={12} sm={3} md={3} key={index}>
+                      <ProjectCard propCard={card}/>
+                    </Grid>
+                  )) 
+            }
           </Grid>
 
 

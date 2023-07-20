@@ -5,7 +5,11 @@ import { Button, Card, CardContent, CardMedia, Typography } from '@mui/material'
 import { Link } from 'react-router-dom';
 //import ArrowOutwardIcon from '@mui/icons-material/ArrowOutward';
 
-export default function ProjectCard() {
+export default function ProjectCard({propCard}) {
+  let [card, setCard] = useState(propCard)
+    console.log(card);
+
+  
   return (
     <Card sx={{ bottom: '0', marginTop: '40px', maxWidth: '100%', boxShadow: 'lg',borderRadius:"0px" }}>
       <CardMedia>
@@ -25,7 +29,7 @@ export default function ProjectCard() {
           fontWeight="xl"
           sx={{ mt:  1}}
         >
-            title
+            title: {card.title}
         </Typography>
         
         
@@ -35,11 +39,15 @@ export default function ProjectCard() {
           fontWeight="xl"
           sx={{ mt:  2}}
         >
-          subtitle
+          subtitle: {card.subtitle}
         </Typography>
 
         <Link
-          href="#product-card"
+          to={{
+            pathname: '/projectDetails',
+            state: { card: card }
+          }}
+          
           fontWeight="xl"
           color="neutral"
           textColor="text.primary"
