@@ -73,11 +73,14 @@ function Home() {
 
   function showProjects() {
     console.log(projects)
-    if (searchTerm.length > 0) {
-      return projects.filter((project)=>{    
+    console.log(searchTerm)
+    if (searchTerm.length != 0) {
+      return projects
+      .filter((project)=>{    
         console.log(project.title.includes(searchTerm))         
           return (project.title.includes(searchTerm))
-        }).map((card, index) => (
+        })
+      .map((card, index) => (
        <Grid item xs={12} sm={3} md={3} key={index}>
           <ProjectCard propCard={card}/>
         </Grid>   
